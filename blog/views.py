@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import BlogPost
 # def home(request):
 #     return render(request, 'home.html', {})
-from .forms import BlogPostForm
+from .forms import BlogPostForm, EditBlogPostForm
 
 class Home(ListView):
     model = BlogPost
@@ -23,6 +23,7 @@ class CreateBlog(CreateView):
 
 class EditBlog(UpdateView):
     model = BlogPost
+    form_class = EditBlogPostForm
     template_name = 'edit_blog.html'
-    fields = ('title', 'title_tag', 'body')
+    
     
