@@ -1,15 +1,13 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import BlogPost
-# def home(request):
-#     return render(request, 'home.html', {})
 from .forms import BlogPostForm, EditBlogPostForm
 from django.urls import reverse_lazy
 
 class Home(ListView):
     model = BlogPost
     template_name = 'home.html'
-    ordering = ['-id']
+    ordering = ['-creation_date']
 
 
 class BlogDetail(DetailView):
@@ -33,5 +31,4 @@ class DeleteBlog(DeleteView):
     model = BlogPost
     template_name = 'delete_blog.html'
     success_url = reverse_lazy('home')
-    
     

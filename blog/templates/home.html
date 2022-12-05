@@ -4,6 +4,8 @@
 <ul>
 {% for blogpost in object_list %}
     <li><a href="{% url 'blogview' blogpost.pk %}">{{ blogpost.title }}</a> - @{{ blogpost.author }}<br/>
+       <small><strong>Posted </strong>{{ blogpost.creation_date|timesince }}</small>
+       <br/>
        <small><a href="{% url 'edit_blogpost' blogpost.pk %}">Edit</a></small>
        <small><a href="{% url 'delete_blogpost' blogpost.pk %}">Delete</a></small>
     {{ blogpost.body }}</li>
