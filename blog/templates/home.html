@@ -1,1 +1,7 @@
-<h1> Hello<h2>
+<h1>Blog posts<h2>
+<ul>
+{% for blogpost in object_list %}
+    <li><a href="{% url 'blogview' blogpost.pk %}">{{ blogpost.title }}</a> - {{ blogpost.author.first_name }}<br/>
+    {{ blogpost.body }}</li>
+{% endfor %}
+</ul>
