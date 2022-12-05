@@ -13,7 +13,7 @@
     {% endif %}
 <hr>
 <br/>
-{{ blogpost.body|slice:":255" }}
+{{ blogpost.body|safe }}
 
 
 <br/><br/>

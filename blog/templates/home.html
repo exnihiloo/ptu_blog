@@ -10,7 +10,7 @@
         <small><a href="{% url 'edit_blogpost' blogpost.pk %}">Edit</a></small>
         <small><a href="{% url 'delete_blogpost' blogpost.pk %}">Delete</a></small>
        {% endif %}
-    {{ blogpost.body }}</li>
+    {{ blogpost.body|slice:":255"|safe }}</li>
 {% endfor %}
 </ul>
 
