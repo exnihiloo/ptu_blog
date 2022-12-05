@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import BlogPost
+from .models import BlogPost, Topic
 from .forms import BlogPostForm, EditBlogPostForm
 from django.urls import reverse_lazy
 
@@ -32,3 +32,8 @@ class DeleteBlog(DeleteView):
     template_name = 'delete_blog.html'
     success_url = reverse_lazy('home')
     
+
+class CreateTopic(CreateView):
+    model = Topic
+    template_name = 'add_topic.html'
+    fields = '__all__'

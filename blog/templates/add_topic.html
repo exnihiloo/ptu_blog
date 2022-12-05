@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Create new topic for blogs {% endblock title %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    <h1>Add topic</h1>
+    <br/><br/>
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-success">Create Topic</button>
+        </form>
+    </div>
+{% else %}
+The page is only for registered users.
+{% endif %}
+
+{% endblock content %}
