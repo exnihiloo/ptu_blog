@@ -6,8 +6,10 @@
     <li><a href="{% url 'blogview' blogpost.pk %}">{{ blogpost.title }}</a> - @{{ blogpost.author }}<br/>
        <small><strong>Posted </strong>{{ blogpost.creation_date|timesince }}</small>
        <br/>
-       <small><a href="{% url 'edit_blogpost' blogpost.pk %}">Edit</a></small>
-       <small><a href="{% url 'delete_blogpost' blogpost.pk %}">Delete</a></small>
+       {% if user.is_authenticated %}
+        <small><a href="{% url 'edit_blogpost' blogpost.pk %}">Edit</a></small>
+        <small><a href="{% url 'delete_blogpost' blogpost.pk %}">Delete</a></small>
+       {% endif %}
     {{ blogpost.body }}</li>
 {% endfor %}
 </ul>
