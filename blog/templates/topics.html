@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+{% if topic_blogposts %}
+    <h1>{{ item }}</h1>
+
+    <ul>
+        {% for blogpost in topic_blogposts %}
+            <li><a href="{% url 'blogview' blogpost.pk %}">{{ blogpost.title }}</a> 
+                - {{ blogpost.topic }}
+                : @{{ blogpost.author }}<br/>
+            <small><strong>Posted </strong>{{ blogpost.creation_date|timesince }}</small>
+            <br/>
+            {% if user.is_authenticated %}
+                <small><a href="{% url 'edit_blogpost' blogpost.pk %}">Edit</a></small>
+                <small><a href="{% url 'delete_blogpost' blogpost.pk %}">Delete</a></small>
+            {% endif %}
+            {{ blogpost.body|slice:":255"|safe }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h3>Page does not exist</h3>
+{% endif %}
+
+{% endblock content %}

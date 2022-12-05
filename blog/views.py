@@ -37,3 +37,8 @@ class CreateTopic(CreateView):
     model = Topic
     template_name = 'add_topic.html'
     fields = '__all__'
+
+
+def topicview(request, item):
+    topic_blogposts = BlogPost.objects.filter(topic = item)
+    return render(request, 'topics.html', {'item' : item.title(), 'topic_blogposts' : topic_blogposts})
