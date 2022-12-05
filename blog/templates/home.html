@@ -9,8 +9,10 @@
        <small><strong>Posted </strong>{{ blogpost.creation_date|timesince }}</small>
        <br/>
        {% if user.is_authenticated %}
-        <small><a href="{% url 'edit_blogpost' blogpost.pk %}">Edit</a></small>
-        <small><a href="{% url 'delete_blogpost' blogpost.pk %}">Delete</a></small>
+            {% if user.id == blogpost.author.id %}
+                <small><a href="{% url 'edit_blogpost' blogpost.pk %}">Edit</a></small>
+                <small><a href="{% url 'delete_blogpost' blogpost.pk %}">Delete</a></small>
+            {% endif %}
        {% endif %}
     {{ blogpost.body|slice:":255"|safe }}</li>
 {% endfor %}

@@ -2,17 +2,21 @@
 {% block title %}Delete blogpost{% endblock title %}
 {% block content %}
 {% if user.is_authenticated %}
-    <h1>Delete blog posts</h1>
-    <br/><br/>
-    <h3>Delete: {{ blogpost.title }}</h3>
-    <br/>
-    <div class="form-group">
-        <form method="POST">
-            {% csrf_token %}
-            <strong>If you delete blog it will be gone forever</strong><br/><br/>
-            <button class="btn btn-danger">Delete</button>
-        </form>
-    </div>
+    {% if user.is_authenticated %}
+        <h1>Delete blog posts</h1>
+        <br/><br/>
+        <h3>Delete: {{ blogpost.title }}</h3>
+        <br/>
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                <strong>If you delete blog it will be gone forever</strong><br/><br/>
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    {% else %}
+        ONly blogs creator can delete his blog.
+    {% endif %}
 {% else %}
 The page is only for registered users.
 {% endif %}
