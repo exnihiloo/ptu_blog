@@ -12,6 +12,11 @@
             <button class="btn btn-success">Post</button>
         </form>
     </div>
+    <script>
+        var name = "{{ user.id }}";
+        document.getElementById('author').value 
+            = name;
+    </script>
 {% else %}
 The page is only for registered users.
 {% endif %}
