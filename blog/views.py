@@ -10,9 +10,22 @@ class Home(ListView):
     ordering = ['-creation_date']
 
 
+    def get_context_data(self, *args, **kwargs):
+        item_menu = Topic.objects.all()
+        context = super(Home, self).get_context_data(*args, **kwargs)
+        context['item_menu'] = item_menu
+        return context
+
+
 class BlogDetail(DetailView):
     model = BlogPost
     template_name = 'blog_details.html'
+
+    def get_context_data(self, *args, **kwargs):
+        item_menu = Topic.objects.all()
+        context = super(BlogDetail, self).get_context_data(*args, **kwargs)
+        context['item_menu'] = item_menu
+        return context
 
 
 class CreateBlog(CreateView):
@@ -20,17 +33,35 @@ class CreateBlog(CreateView):
     form_class = BlogPostForm
     template_name = 'add_blogpost.html'
 
+    def get_context_data(self, *args, **kwargs):
+        item_menu = Topic.objects.all()
+        context = super(CreateBlog, self).get_context_data(*args, **kwargs)
+        context['item_menu'] = item_menu
+        return context
+
 
 class EditBlog(UpdateView):
     model = BlogPost
     form_class = EditBlogPostForm
     template_name = 'edit_blog.html'
 
+    def get_context_data(self, *args, **kwargs):
+        item_menu = Topic.objects.all()
+        context = super(EditBlog, self).get_context_data(*args, **kwargs)
+        context['item_menu'] = item_menu
+        return context
+
 
 class DeleteBlog(DeleteView):
     model = BlogPost
     template_name = 'delete_blog.html'
     success_url = reverse_lazy('home')
+
+    def get_context_data(self, *args, **kwargs):
+        item_menu = Topic.objects.all()
+        context = super(DeleteBlog, self).get_context_data(*args, **kwargs)
+        context['item_menu'] = item_menu
+        return context
     
 
 class CreateTopic(CreateView):
@@ -38,7 +69,15 @@ class CreateTopic(CreateView):
     template_name = 'add_topic.html'
     fields = '__all__'
 
+    def get_context_data(self, *args, **kwargs):
+        item_menu = Topic.objects.all()
+        context = super(CreateTopic, self).get_context_data(*args, **kwargs)
+        context['item_menu'] = item_menu
+        return context
+
 
 def topicview(request, item):
-    topic_blogposts = BlogPost.objects.filter(topic = item)
+    topic_blogposts = BlogPost.objects.filter(topic=item)
     return render(request, 'topics.html', {'item' : item.title(), 'topic_blogposts' : topic_blogposts})
+
+

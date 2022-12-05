@@ -8,5 +8,5 @@ urlpatterns = [
     path('add_topic/', views.CreateTopic.as_view(), name='add_topic'),
     path('blogpost/edit/<int:pk>', views.EditBlog.as_view(), name='edit_blogpost'),
     path('blogpost/<int:pk>/delete', views.DeleteBlog.as_view(), name='delete_blogpost'),
-    path('topic/<str:item>/', views.topicview, name='topic')
+    path('topic/<str:item>/', views.topicview, name='topic'),
 ]
