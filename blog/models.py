@@ -9,6 +9,7 @@ User = get_user_model()
 
 class BlogPost(models.Model):
     title = models.CharField(_("title"), max_length = 255)
+    title_tag = models.CharField(_("title tag"), max_length = 255, default='Fox blog')
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     body = models.TextField(_("body"))
 
