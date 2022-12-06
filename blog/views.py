@@ -1,10 +1,13 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import BlogPost, Topic
+from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import FormMixin
 from .forms import BlogPostForm, EditBlogPostForm, CommentForm
 from django.urls import reverse_lazy, reverse
 from django.db.models import Q
+from django.http import HttpResponse, HttpResponseRedirect
 
 class Home(ListView):
     model = BlogPost
@@ -120,3 +123,6 @@ def search(request):
         Q(topic__name__icontains=query) 
     )
     return render(request, 'search.html', {'blogposts': search_results, 'query': query})
+
+
+

@@ -12,6 +12,18 @@
 
 
 <h1> {{ blogpost.title }} - @{{ blogpost.author }}</h1>
+<div class="col-12 text-end">
+    <a href="{% url 'user_readlater' blogpost.id %}" class="btn btn-success btn-sm" role="button" aria-pressed="true">To wishlist</a></div>
+</div>
+<div class="container pt-1">
+{% if messages %}
+    <div class="alert alert-success" alert-"{{ message.tags }}" role="alert">
+    {% for message in messages  %}
+      {{message|safe}} - <a href="{% url "readlater" %}" class="alert-link">Your Readlaters</a>.
+    {% endfor %}
+    </div>
+{% endif %}
+</div>
 <small><strong>Posted </strong>{{ blogpost.creation_date|timesince }}</small>
 <br/>
 <small> By: 

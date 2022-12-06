@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Readlater{% endblock %}
+
+{% block content %}
+<div class="col-6 mx-auto mt-5">
+  {% if readlater %}
+    {% for blogpost in readlater %}
+        <h1 class="h3">My Wishlist</h1>
+        <div>Manage your wishlist</div>
+        <hr />
+    <div class="card mb-5 rounded-0">
+        <div class="row g-0">
+        <div class="col-md-2">
+            <img class="img-fluid d-block p-1" width="200px" src="{{ blogpost.image.url }}"/>
+        </div>
+        <div class="col-md-10">
+            <div class="card-body">
+            <a class="card-title h5" href="{{ blogpost.get_absolute_url }}">{{blogpost.title}}</a>
+            <p class="card-text">{{ blogpost.body|safe }}</p>
+            <div class='col-12 text-end'>
+                <a type="button" class="btn btn-primary fw500 btn-sm" href="{% url 'user_readlater' blogpost.id %}">Remove from Wishlist</a>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    {% endfor %}
+  {% else %}
+  <p class="card-text">No blogs have been added to your read later list yet.</p>
+  {% endif %}
+</div>
+{% endblock content %}

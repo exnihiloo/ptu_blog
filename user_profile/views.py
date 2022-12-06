@@ -8,6 +8,9 @@ from .forms import RegisterForm, UserUpdateForm, ChangePasswordForm, ProfileUpda
 from django.utils.translation import gettext_lazy as _
 from .models import Profile
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.http import HttpResponse, HttpResponseRedirect
+from blog.models import BlogPost
 
 
 class UserRegistration(generic.CreateView):
@@ -63,3 +66,22 @@ def update_profile(request):
         'user_form': user_form,
         'profile_form': profile_form,
     })
+
+
+@login_required
+def read_later(request, id):
+    readlater_blog = get_object_or_404(BlogPost, id = id)
+    if readlater_blog.users_readlater.filter(id = request.user.id).exists():
+        readlater_blog.users_readlater.remove(request.user)
+        messages.success(request, readlater_blog.title + " has been removed from your read later list")
+    else:
+        readlater_blog.users_readlater.add(request.user)
+        messages.success(request, "Added " + readlater_blog.title + " to your read later list")
+    return HttpResponseRedirect(request.META["HTTP_REFERER"])
+
+
+
+@login_required
+def readlaterview(request):
+    readlater_blogs = BlogPost.objects.filter(users_readlater = request.user)
+    return render(request, 'user_readlater.html', {'readlater' : readlater_blogs})

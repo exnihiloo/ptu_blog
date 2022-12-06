@@ -30,7 +30,7 @@ class BlogPost(models.Model):
     creation_date = models.DateField(_("created"), auto_now_add=True)
     topic = models.ForeignKey(Topic, verbose_name=_("topic"), related_name='blogpost_topics', on_delete=models.CASCADE)
     image = models.ImageField(_("image"), null = True, blank = True, upload_to='images/', default = 'images/default.png')
-
+    users_readlater = models.ManyToManyField(User, related_name="user_readlater", blank=True)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -40,6 +40,11 @@ class BlogPost(models.Model):
                 output_size = (300, 300)
                 image.thumbnail(output_size)
                 image.save(self.image.path)
+
+
+    def get_absolute_url(self):
+        return reverse("blogview")
+
 
     def __str__(self):
         return f"{self.title} : {self.author}"
