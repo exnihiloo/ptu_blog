@@ -2,7 +2,7 @@
 {% block content %}
 <h1>Blog posts</h1>
 <ul>
-{% for blogpost in object_list %}
+{% for blogpost in blogpost_list %}
     <li><a href="{% url 'blogview' blogpost.pk %}">{{ blogpost.title }}</a> 
         - <a href="{% url 'topic' blogpost.topic %}">{{ blogpost.topic }}</a>
         : @{{ blogpost.author }}<br/>
