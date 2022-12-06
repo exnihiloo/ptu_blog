@@ -28,6 +28,7 @@ class BlogPost(models.Model):
     body = RichTextField(_("body"), blank = True, null = True)
     creation_date = models.DateField(_("created"), auto_now_add=True)
     topic = models.CharField(_("topic"), max_length = 255, default='sport')
+    image = models.ImageField(_("image"), null = True, blank = True, upload_to='images/')
 
 
     def __str__(self):

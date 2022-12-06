@@ -17,6 +17,9 @@
 <hr>
 <br/>
 {{ blogpost.body|safe }}
+{% if blogpost.image %}
+    <img src="{{ blogpost.image.url }}">
+{% endif %}
 
 
 <br/><br/>

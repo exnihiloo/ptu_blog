@@ -11,7 +11,7 @@ for topic in choices:
 class BlogPostForm(forms.ModelForm):
     class Meta:
         model = models.BlogPost
-        fields = ('title', 'title_tag', 'author', 'topic', 'body')
+        fields = ('title', 'title_tag', 'author', 'topic', 'body', 'image')
 
         widgets = {
             'title' : forms.TextInput(attrs = {'class':'form-control', 'placeholder': 'Title'}),
@@ -25,7 +25,7 @@ class BlogPostForm(forms.ModelForm):
 class EditBlogPostForm(forms.ModelForm):
     class Meta:
         model = models.BlogPost
-        fields = ('title','title_tag', 'body',)
+        fields = ('title','title_tag', 'body', 'image')
 
         widgets = {
             'title' : forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Title'}),
