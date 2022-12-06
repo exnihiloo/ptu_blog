@@ -17,7 +17,16 @@
                             <div class="form-group">
                                 <form method="POST">
                                     {% csrf_token %}
-                                    {{ form.as_p }}
+                                    <div>{{ user_form.first_name.label }}</div>
+                                    <div>{{ user_form.first_name }}</div>
+                                    <div>{{ user_form.last_name.label }}</div>
+                                    <div>{{ user_form.last_name }}</div>
+                                    <div>{{ user_form.email.label }}</div>
+                                    <div>{{ user_form.email }}</div>
+                                    <div>{{ profile_form.about.label }}</div>
+                                    <div>{{ profile_form.about }}</div>
+                                    <div>{{ profile_form.photo.label }}</div>
+                                    <div>{{ profile_form.photo }}</div>
                                     <div class="container text-center">
                                         <button class="btn btn-success">Confirm</button>
                                     </div>
