@@ -20,18 +20,34 @@
 {% if blogpost.image %}
     <img src="{{ blogpost.image.url }}">
 {% endif %}
+
+
+<hr>
+<h2>Comments:</h2>
+ {% if not blogpost.comments.all %}
+    <p>No comments yet</p>
+{% else %}
+    {% for comment in blogpost.comments.all %}
+       <strong>@{{ comment.user.username }} - {{ comment.created_at }}</strong>
+        <br/>
+        <small>{{ comment.content }}</small>
+        <br/><br/>
+    {% endfor %}
+{% endif %}
+
+
 <hr>
 {% if user.is_authenticated %}
     <div class="section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    <form method="POST" action="{% url 'blogview' blogpost.pk %}">
+                    <form action="#" method="POST">
                         {% csrf_token %}
                         <div class='form-group'>
-                            {{ form_com }}
+                            {{form.as_p}}
                         </div>
-                        <button class="btn btn-primary btn-block" type="submit">Comment</button>
+                        <button class="btn btn-primary" type="submit">Comment</button>
                     </form>
                 </div>
             </div>

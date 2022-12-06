@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import BlogPost, Topic
+from django.views.generic.edit import FormMixin
 from .forms import BlogPostForm, EditBlogPostForm, CommentForm
 from django.urls import reverse_lazy, reverse
 
@@ -17,26 +18,34 @@ class Home(ListView):
         return context
 
 
-class BlogDetail(DetailView):
+class BlogDetail(FormMixin, DetailView):
     model = BlogPost
     template_name = 'blog_details.html'
-    form_com = CommentForm
+    form_class = CommentForm
+
+    def get_success_url(self):
+        return reverse('blogview', kwargs={'pk': self.get_object().id})
+
+    def post(self, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
 
-    def post(self, request, *args, **kwargs):
-        form_com= CommentForm(request.POST)
-        if form_com.is_valid():
-            form_com = self.get_object()
-            form_com.instance.user = request.user
-            form_com.instance.post = form_com
-            form_com.save()
-            
-            return redirect(reverse('blogview', kwargs={'pk': 'blogpost.pk'}))
+    def form_valid(self, form):
+        form.instance.blogpost = self.get_object()
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = self.form_com
-        return context
+    def get_initial(self):
+        return {
+            'blogpost' : self.get_object(),
+            'user' : self.request.user
+        }
 
 
     def get_context_data(self, *args, **kwargs):

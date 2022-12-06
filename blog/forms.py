@@ -1,6 +1,6 @@
 from django import forms
 from . import models
-
+from django.utils.timezone import datetime, timedelta
 
 # choices = models.Topic.objects.all().values_list('name', 'name')
 
@@ -34,11 +34,34 @@ class EditBlogPostForm(forms.ModelForm):
         }
 
 # comments
+# class CommentForm(forms.ModelForm):
+#     content = forms.CharField(widget = forms.Textarea(attrs = {
+#         'class': 'md-textarea form-control',
+#         'rows':'4'
+#     }))
+#     class Meta:
+#         models = models.BlogComment
+#         fields = ('content', )
+        
+
 class CommentForm(forms.ModelForm):
-    content = forms.CharField(widget = forms.Textarea(attrs = {
-        'class': 'md-textarea form-control',
-        'rows':'4'
-    }))
+    def is_valid(self) -> bool:
+        valid = super().is_valid()
+        if valid:
+            user = self.cleaned_data.get("user")
+            recent_posts = models.BlogComment.objects.filter(
+                user=user,
+                created_at__gte=(datetime.utcnow()-timedelta(hours=1))
+            ) 
+            if recent_posts:
+                return False
+        return valid
+
     class Meta:
-        models = models.BlogComment
-        fields = ('content', )
+        model = models.BlogComment
+        fields = ('content', 'blogpost', 'user', )
+        widgets = {
+            'content' : forms.Textarea(attrs = {'class':'form-control', 'placeholder': 'Write your story here'}),
+            'blogpost': forms.TextInput(attrs = {'class':'form-control', 'value' : '', 'id':'blogpost', 'type':'hidden'}),
+            'user': forms.TextInput(attrs = {'class':'form-control', 'value' : '', 'id':'user', 'type':'hidden'}),
+        }
