@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from datetime import datetime, date
+from PIL import Image
 
 
 
@@ -27,9 +28,18 @@ class BlogPost(models.Model):
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     body = RichTextField(_("body"), blank = True, null = True)
     creation_date = models.DateField(_("created"), auto_now_add=True)
-    topic = models.CharField(_("topic"), max_length = 255, default='sport')
-    image = models.ImageField(_("image"), null = True, blank = True, upload_to='images/')
+    topic = models.ForeignKey(Topic, verbose_name=_("topic"), related_name='blogpost_topics', on_delete=models.CASCADE)
+    image = models.ImageField(_("image"), null = True, blank = True, upload_to='images/', default = 'images/default.png')
 
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.image:
+            image = Image.open(self.image.path)
+            if image.width > 300 or image.height > 300:
+                output_size = (300, 300)
+                image.thumbnail(output_size)
+                image.save(self.image.path)
 
     def __str__(self):
         return f"{self.title} : {self.author}"
@@ -38,3 +48,12 @@ class BlogPost(models.Model):
         return reverse('home')
         
     
+class BlogComment(models.Model):
+    blogpost = models.ForeignKey(BlogPost, related_name = 'comments', on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    created_at = models.DateField(_("created at"), auto_now_add = True)
+    content = models.TextField(_("content"), max_length=2000)
+
+
+    def __str__(self):
+        return self.user.username
