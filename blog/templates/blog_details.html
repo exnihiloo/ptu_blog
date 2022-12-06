@@ -2,6 +2,15 @@
 {% block title %}{{ blogpost.title_tag }}{% endblock title %}
 {% block content %}
 
+<style>
+    .media img {
+        border-radius: 50%;
+        padding: 5px;
+        width: 70px;
+      }
+</style>
+
+
 <h1> {{ blogpost.title }} - @{{ blogpost.author }}</h1>
 <small><strong>Posted </strong>{{ blogpost.creation_date|timesince }}</small>
 <br/>
@@ -28,9 +37,20 @@
     <p>No comments yet</p>
 {% else %}
     {% for comment in blogpost.comments.all %}
-       <strong>@{{ comment.user.username }} - {{ comment.created_at }}</strong>
+       {% comment %} <strong>@{{ comment.user.username }} - {{ comment.created_at }}</strong>
         <br/>
-        <small>{{ comment.content }}</small>
+        <small>{{ comment.content }}</small> {% endcomment %}
+        <div class="media">
+            {% if comment.user.profile.photo %}
+                <img class="align-self-center mr-3 profile" src="{{ comment.user.profile.photo.url }}" alt="Generic placeholder image">
+            {% endif %} 
+            <div class="media-body">
+              <h3 class="mt-0">@{{ comment.user.username }}</h3>
+              <small>{{ comment.created_at }}</small>
+              <br/>
+              <i> {{ comment.content }}</i>
+            </div>
+          </div>
         <br/><br/>
     {% endfor %}
 {% endif %}
