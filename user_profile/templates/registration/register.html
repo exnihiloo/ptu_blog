@@ -1,15 +1,53 @@
 {% extends 'base.html' %}
 {% block title %}Register{% endblock title %}
 {% block content %}
-<h1>Create an account</h1>
-<br/><br/>
 
-<div class="form-group">
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-success">Register</button>
-    </form>
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <div class="col-md-12">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-lg-7  mx-auto">
+                            <div class='text-center'>
+                                <h1>Create an account</h1>
+                            </div>
+                            <br/><br/>
+                            <div class="form-group">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <p>
+                                        <label for="id_username">Username:</label>
+                                        <input type="text" name="username" maxlength="150" autofocus class="form-control mb-3" placeholder="Username" required id="id_username">
+                                    </p>
+                                    <p>
+                                        <label for="id_first_name">First name:</label>
+                                        <input type="text" name="first_name" class="form-control mb-3" required id="id_first_name">
+                                    </p>
+                                    <p>
+                                        <label for="id_last_name">Last name:</label>
+                                        <input type="text" name="last_name" class="form-control mb-3" required id="id_last_name">
+                                    </p>
+                                    <p>
+                                        <label for="id_email">Email address:</label>
+                                        <input type="email" name="email" maxlength="254" class="form-control mb-3" placeholder="E-mail" name="email" id="id_email">
+                                    </p>
+                                    <p>
+                                        <label for="id_password1">Password:</label>
+                                        <input type="password" name="password1" autocomplete="new-password" class="form-control mb-3" placeholder="Password" required id="id_password1">
+                                    </p>
+                                    <p>
+                                        <label for="id_password2">Password confirmation:</label>
+                                        <input type="password" name="password2" autocomplete="new-password" class="form-control" placeholder="Repeat Password" required id="id_password2"> 
+                                    </p>
+                                    <button class="btn btn-success">Register</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 {% endblock content %}

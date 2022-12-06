@@ -1,5 +1,7 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
+
 from django import forms
 
 User = get_user_model()
@@ -24,3 +26,22 @@ class RegisterForm(UserCreationForm):
                 {'class': 'form-control mb-3', 'placeholder': 'Password'})
             self.fields['password2'].widget.attrs.update(
                 {'class': 'form-control', 'placeholder': 'Repeat Password'})
+
+
+class UserUpdateForm(forms.ModelForm):
+    first_name = forms.CharField(widget = forms.TextInput(attrs = {'class':'form-control mb-3'}))
+    last_name = forms.CharField(widget = forms.TextInput(attrs = {'class':'form-control mb-3'}))
+    class Meta:
+        model = User
+        fields = ("first_name", "last_name",)
+
+
+class ChangePasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(widget = forms.PasswordInput(attrs = {'class':'form-control mb-3', 'type' : 'password'}))
+    new_password1 = forms.CharField(widget = forms.PasswordInput(attrs = {'class':'form-control mb-3', 'type' : 'password'}))
+    new_password2 = forms.CharField(widget = forms.PasswordInput(attrs = {'class':'form-control mb-3', 'type' : 'password'}))
+
+    class Meta:
+        model = User
+        fields = ('old_password', 'new_password1', 'new_password2')
+    

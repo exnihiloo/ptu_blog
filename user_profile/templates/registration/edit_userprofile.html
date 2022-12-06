@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Edit User Profile{% endblock title %}
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <div class="col-md-12">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-lg-7  mx-auto">
+                            <div class='text-center'>
+                                <h1>Edit User profile</h1>
+                            </div>
+                            <br/><br/>
+                            <div class="form-group">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <div class="container text-center">
+                                        <button class="btn btn-success">Confirm</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <p class="text-center pb-3 mt-5">
+                                <a href="{% url 'change_password' %}">Click here to change password</a>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
