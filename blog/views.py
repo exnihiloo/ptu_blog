@@ -4,6 +4,7 @@ from .models import BlogPost, Topic
 from django.views.generic.edit import FormMixin
 from .forms import BlogPostForm, EditBlogPostForm, CommentForm
 from django.urls import reverse_lazy, reverse
+from django.db.models import Q
 
 class Home(ListView):
     model = BlogPost
@@ -111,3 +112,11 @@ def topicview(request, item):
     return render(request, 'topics.html', {'topic' : topic, 'topic_blogposts' : topic_blogposts})
 
 
+
+def search(request):
+    query = request.GET.get('query')
+    search_results = BlogPost.objects.filter(Q(title__icontains=query) | 
+        Q(author__username__icontains=query) | 
+        Q(topic__name__icontains=query) 
+    )
+    return render(request, 'search.html', {'blogposts': search_results, 'query': query})

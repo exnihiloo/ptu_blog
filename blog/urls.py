@@ -9,4 +9,6 @@ urlpatterns = [
     path('blogpost/edit/<int:pk>', views.EditBlog.as_view(), name='edit_blogpost'),
     path('blogpost/<int:pk>/delete', views.DeleteBlog.as_view(), name='delete_blogpost'),
     path('topic/<str:item>/', views.topicview, name='topic'),
+    path('search/', views.search, name='search'),
+    path('search/<int:pk>', views.BlogDetail.as_view(), name='blogpost'),
 ]
