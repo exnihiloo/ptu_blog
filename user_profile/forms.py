@@ -38,10 +38,14 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class ProfileUpdateForm(forms.ModelForm):
-    about = forms.CharField(widget = forms.Textarea(attrs = {'class':'form-control mb-3'}))
+    # about = forms.CharField(widget = forms.Textarea(attrs = {'class':'form-control mb-3'}))
     class Meta:
         model = Profile
-        fields = ["about", "photo"]
+        fields = ("about", "photo",)
+        widgets = {
+            'about' : forms.Textarea(attrs = {'class':'form-control', 'placeholder': 'Write your story here'}),
+            'photo' : forms.FileInput(attrs = {'class': 'form-control'})
+        }
 
 #end of user and profile update forms
 

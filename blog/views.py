@@ -11,6 +11,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 class Home(ListView):
     model = BlogPost
+    paginate_by = 3
     template_name = 'home.html'
     ordering = ['-creation_date']
 

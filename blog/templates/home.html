@@ -2,6 +2,15 @@
 {% block content %}
 
 <!-- karuselės pradžia-->
+
+<style>
+    .album img {    
+        padding: 5px; 
+        width: 250px;
+        height: 250px;
+    }
+</style>
+
 <main>
     <section class="py-5 text-center container">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -90,6 +99,16 @@
             </div>
         </div>
     </div>
-
+    <div class="paginator">
+        {% if page_obj.has_previous %}
+            <a href = "?{% if request.GET.query %}query={{request.GET.query}}&{% endif %}page=1">&#8676;</a>
+            <a href = "?{% if request.GET.query %}query={{request.GET.query}}&{% endif %}page={{ page_obj.previous_page_number}}">&#8592;</a>
+        {% endif %}
+        {{ page_obj.number}} out of {{ page_obj.paginator.num_pages }}
+        {% if page_obj.has_next %}
+            <a href = "?{% if request.GET.query %}query={{request.GET.query}}&{% endif %}page={{ page_obj.next_page_number }}">&#8594;</a>
+            <a href = "?{% if request.GET.query %}query={{request.GET.query}}&{% endif %}page={{ page_obj.paginator.num_pages }}">&#8677;</a>
+        {% endif %}
+    </div>
 </main>
 {% endblock content %}

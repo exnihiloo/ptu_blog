@@ -19,6 +19,7 @@ class BlogPostForm(forms.ModelForm):
             'author' : forms.TextInput(attrs = {'class':'form-control', 'value' : '', 'id':'author', 'type':'hidden'}),
             'topic' : forms.Select(attrs={'class':'form-control'}),
             'body' : forms.Textarea(attrs = {'class':'form-control', 'placeholder': 'Write your story here'}),
+            'image' : forms.FileInput(attrs = {'class': 'form-control'})
         }
 
 
