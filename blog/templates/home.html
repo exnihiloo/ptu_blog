@@ -1,21 +1,95 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Blog posts</h1>
-<ul>
-{% for blogpost in blogpost_list %}
-    <li><a href="{% url 'blogview' blogpost.pk %}">{{ blogpost.title }}</a> 
-        - <a href="{% url 'topic' blogpost.topic %}">{{ blogpost.topic }}</a>
-        : <a href="{% url 'otherprofile' blogpost.author.profile.id %}"> @{{ blogpost.author }}</a><br/>  
-       <small><strong>Posted </strong>{{ blogpost.creation_date|timesince }}</small>
-       <br/>
-       {% if user.is_authenticated %}
-            {% if user.id == blogpost.author.id %}
-                <small><a href="{% url 'edit_blogpost' blogpost.pk %}">Edit</a></small>
-                <small><a href="{% url 'delete_blogpost' blogpost.pk %}">Delete</a></small>
-            {% endif %}
-       {% endif %}
-    {{ blogpost.body|slice:":255"|safe }}</li>
-{% endfor %}
-</ul>
 
+<!-- karuselės pradžia-->
+<main>
+    <section class="py-5 text-center container">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="first-slide" src="https://d18lkz4dllo6v2.cloudfront.net/cumulus_uploads/entry/43959/adobe-aliens.jpeg?pw=1200" width="1200" height="350" alt="First slide">
+                <div class="container">
+                <div class="carousel-caption text-left">
+                    <h1>Do aliens exist?</h1>
+                </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="second-slide" src="https://miro.medium.com/max/1400/1*GvnuAR0VEjyFU2jRuCjIJw.png" width="1200" height="350" alt="Second slide">
+                <div class="container">
+                <div class="carousel-caption text-left">
+                    <h2> Everything is Connected </h2>
+                </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="third-slide" src="https://i.guim.co.uk/img/media/c360c56c9be61ab2a2b56ba4eac6b1810445fdb6/0_0_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=b0f4bb256436685cded8e936cc429e41" 
+                    width="1200" height="350" alt="Third slide">
+                <div class="container">
+                <div class="carousel-caption text-right">
+                    <p>my favourite conspiracy theory is that everything will eventually turn out okay</p>
+                </div>
+                </div>
+            </div>
+            </div>
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </section>
+    <hr>
+
+
+
+<!-- karuselės pabaiga-->
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="pb-3 h5">Enjoy reading, writing, posting, creating</div>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+                    {% for blogpost in blogpost_list %}
+                    <div class="col">
+                        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+                            <img class="img-fluid" src="{{ blogpost.image.url }}" alt="Responsive image">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <a href="{% url 'blogview' blogpost.pk %}">{{ blogpost.title }}</a>
+                                    by: <a href="{% url 'otherprofile' blogpost.author.profile.id %}"><small>@{{ blogpost.author }}</small></a>
+                                </p>
+                                <p class="card-text">{{ blogpost.body|slice:":50"|safe }}</p>
+                                <div class="d-flex justify-content-between">
+                                    <div class="btn-group">
+                                        {% if user.is_authenticated %}
+                                            {% if user.id == blogpost.author.id %}
+                                                <a href="{% url 'edit_blogpost' blogpost.pk %}">
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                                </a>
+                                                <a href="{% url 'delete_blogpost' blogpost.pk %}">
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <small class="text-muted">{{ blogpost.creation_date|timesince }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
 {% endblock content %}
