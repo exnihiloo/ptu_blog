@@ -14,6 +14,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from blog.models import BlogPost
 from . import models
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
@@ -78,10 +79,10 @@ def read_later(request, id):
     readlater_blog = get_object_or_404(BlogPost, id = id)
     if readlater_blog.users_readlater.filter(id = request.user.id).exists():
         readlater_blog.users_readlater.remove(request.user)
-        messages.success(request, readlater_blog.title + " has been removed from your read later list")
+        messages.success(request, readlater_blog.title + " has been removed from your read later list", extra_tags='readlater')
     else:
         readlater_blog.users_readlater.add(request.user)
-        messages.success(request, "Added " + readlater_blog.title + " to your read later list")
+        messages.success(request, "Added " + readlater_blog.title + " to your read later list", extra_tags='readlater')
     return HttpResponseRedirect(request.META["HTTP_REFERER"])
 
 

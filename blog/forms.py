@@ -1,12 +1,10 @@
 from django import forms
 from . import models
 from django.utils.timezone import datetime, timedelta
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 
-# choices = models.Topic.objects.all().values_list('name', 'name')
 
-# topics_list = []
-# for topic in choices:
-#     topics_list.append(topic) ; choices = topics_list,
 
 class BlogPostForm(forms.ModelForm):
     class Meta:

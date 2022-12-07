@@ -22,14 +22,15 @@
 
 
 
+
 <div class="container pt-1">
-{% if messages %}
-    <div class="alert alert-success" alert-"{{ message.tags }}" role="alert">
-    {% for message in messages  %}
-      {{message|safe}} - <a href="{% url "readlater" %}" class="alert-link">Your Readlaters</a>.
-    {% endfor %}
-    </div>
-{% endif %}
+    {% if messages %}
+        <div class="alert alert-success text-center" alert-"{{ message.tags }}" role="alert">
+        {% for message in messages  %}
+            {{message|safe}}
+        {% endfor %}
+        </div>
+    {% endif %}
 </div>
 <small><strong>Posted </strong>{{ blogpost.creation_date|timesince }}</small>
 <br/>

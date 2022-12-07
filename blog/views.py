@@ -8,6 +8,7 @@ from .forms import BlogPostForm, EditBlogPostForm, CommentForm
 from django.urls import reverse_lazy, reverse
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
+from django.utils.translation import gettext_lazy as _
 
 class Home(ListView):
     model = BlogPost
@@ -37,6 +38,7 @@ class BlogDetail(FormMixin, DetailView):
         if form.is_valid():
             return self.form_valid(form)
         else:
+            messages.error(self.request, _("Malaka, you're posting too much!"), extra_tags='comment')
             return self.form_invalid(form)
 
 
@@ -134,9 +136,11 @@ def likes(request, pk):
     if not liked:
         liked = BlogLike.objects.create(user = user, liked_blog = blogpost)
         current_likes += 1
+        messages.success(request, _("You liked this blog post."))
     else:
         liked = BlogLike.objects.filter(user = user, liked_blog = blogpost).delete()
         current_likes -= 1
+        messages.success(request, _("You unliked this blog post."))
     blogpost.likes = current_likes
     blogpost.save()
     return HttpResponseRedirect(reverse('blogview', args = [pk]))
