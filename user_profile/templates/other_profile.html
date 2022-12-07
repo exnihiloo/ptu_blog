@@ -5,6 +5,16 @@
 <h1>View profile</h1>
 <div class="container">
     {{ page_user }}
+    {{ page_user.user.first_name }}
+    <br/>
+    {{ page_user.user.profile.about }}
+    <br/>
+    <hr>
+    {% if page_user.user.blog_posts %}
+        {% for blogpost in page_user.user.blog_posts.all %}
+        {{ blogpost.title }}<br/><hr>
+        {% endfor %}
+    {% endif %}
 </div>
 
 

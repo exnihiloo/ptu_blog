@@ -25,7 +25,7 @@ class Topic(models.Model):
 class BlogPost(models.Model):
     title = models.CharField(_("title"), max_length = 255)
     title_tag = models.CharField(_("title tag"), max_length = 255, default='Fox blog')
-    author = models.ForeignKey(User, on_delete = models.CASCADE)
+    author = models.ForeignKey(User, on_delete = models.CASCADE, related_name="blog_posts")
     body = RichTextField(_("body"), blank = True, null = True)
     creation_date = models.DateField(_("created"), auto_now_add=True)
     topic = models.ForeignKey(Topic, verbose_name=_("topic"), related_name='blogpost_topics', on_delete=models.CASCADE)

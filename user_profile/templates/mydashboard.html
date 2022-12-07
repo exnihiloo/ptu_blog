@@ -9,6 +9,11 @@
         </div>
         <div class="col-12 d-flex justify-content-between">
             <small>My personal details</small>
+            {% if user.blog_posts %}
+                {% for bpost in user.blog_posts.all %}
+                    {{ bpost.title }}
+                {% endfor %}
+            {% endif %}  
         </div>
         <hr/>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
