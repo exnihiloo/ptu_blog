@@ -5,7 +5,7 @@
 {% for blogpost in blogpost_list %}
     <li><a href="{% url 'blogview' blogpost.pk %}">{{ blogpost.title }}</a> 
         - <a href="{% url 'topic' blogpost.topic %}">{{ blogpost.topic }}</a>
-        : @{{ blogpost.author }}<br/>  
+        : <a href="{% url 'otherprofile' blogpost.author.profile.id %}"> @{{ blogpost.author }}</a><br/>  
        <small><strong>Posted </strong>{{ blogpost.creation_date|timesince }}</small>
        <br/>
        {% if user.is_authenticated %}

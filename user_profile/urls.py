@@ -9,4 +9,5 @@ urlpatterns = [
     path('readlater', views.readlaterview, name = 'readlater'),
     path('mydashboard/', views.mydashboard, name='mydashboard'),
     path('delete_profile/', views.deleteprofile, name = 'delete_profile'),
+    path('<int:pk>/profile', views.OtherProfile.as_view(), name = 'otherprofile')
 ]

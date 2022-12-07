@@ -13,7 +13,7 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         related_name="profile",
     )
-    photo = models.ImageField(_("photo"), upload_to='user_profile/photos', null=True, blank=True)
+    photo = models.ImageField(_("photo"), upload_to='user_profile/photos', default = 'images/profile.png', null=True, blank=True)
     about = models.TextField(_("about"), max_length=2000)
 
     def __str__(self) -> str:

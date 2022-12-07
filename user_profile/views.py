@@ -105,3 +105,21 @@ def deleteprofile(request):
     u.delete()
     logout(request)
     return render(request,'registration/delete_confirmation.html')
+
+
+
+# def otherprofile(request, id):
+#     user = User.objects.get(user = id)
+#     # user = get_object_or_404(User, id = id)
+#     return render(request, 'other_profile.html', {'user' : user})
+
+class OtherProfile(DetailView):
+    model = Profile
+    template_name = 'other_profile.html'
+
+    def get_context_data(self, *args, **kwargs):
+        users = Profile.objects.all()
+        context = super(OtherProfile, self).get_context_data(*args, **kwargs)
+        page_user = get_object_or_404(Profile, id=self.kwargs['pk'])
+        context['page_user'] = page_user
+        return context
