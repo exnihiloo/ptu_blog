@@ -85,3 +85,8 @@ def read_later(request, id):
 def readlaterview(request):
     readlater_blogs = BlogPost.objects.filter(users_readlater = request.user)
     return render(request, 'user_readlater.html', {'readlater' : readlater_blogs})
+
+
+@login_required
+def mydashboard(request):
+    return render(request, 'mydashboard.html')
