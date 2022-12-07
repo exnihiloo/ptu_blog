@@ -35,7 +35,14 @@
                             <p class="text-center pb-3 mt-5">
                                 <a href="{% url 'change_password' %}">Click here to change password</a>
                             </p>
-
+                            </br>
+                            <form class="account-form px-4" action="{% url 'delete_profile' %}" method="post">
+                                {% csrf_token %}
+                                <p class=" h3 pt-4 font-weight-bold">Delete Account</p>
+                                <p>Click the button below to delete your account.</p>
+                                <button type="submit" role="button"
+                                    class="btn btn-danger btn-block py-2 mb-4 mt-5 fw-bold w-100">Delete</button>
+                            </form>
                         </div>
                     </div>
                 </div>

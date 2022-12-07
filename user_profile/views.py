@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import login, logout
 from django.views import generic
 from django.views.generic import DetailView
 from django.urls import reverse_lazy
@@ -11,6 +12,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from blog.models import BlogPost
+from . import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class UserRegistration(generic.CreateView):
@@ -90,3 +95,13 @@ def readlaterview(request):
 @login_required
 def mydashboard(request):
     return render(request, 'mydashboard.html')
+
+
+@login_required
+def deleteprofile(request):
+    user = models.Profile.objects.get(user=request.user)
+    u = User.objects.get(username = request.user)
+    user.delete()
+    u.delete()
+    logout(request)
+    return render(request,'registration/delete_confirmation.html')
