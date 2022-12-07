@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import BlogPost, Topic
+from .models import BlogPost, Topic, BlogLike
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import FormMixin
 from .forms import BlogPostForm, EditBlogPostForm, CommentForm
@@ -124,5 +124,18 @@ def search(request):
     )
     return render(request, 'search.html', {'blogposts': search_results, 'query': query})
 
-
-
+@login_required
+def likes(request, pk):
+    user = request.user
+    blogpost = BlogPost.objects.get(id = pk)
+    current_likes = blogpost.likes
+    liked = BlogLike.objects.filter(user = user, liked_blog = blogpost).count()
+    if not liked:
+        liked = BlogLike.objects.create(user = user, liked_blog = blogpost)
+        current_likes += 1
+    else:
+        liked = BlogLike.objects.filter(user = user, liked_blog = blogpost).delete()
+        current_likes -= 1
+    blogpost.likes = current_likes
+    blogpost.save()
+    return HttpResponseRedirect(reverse('blogview', args = [pk]))

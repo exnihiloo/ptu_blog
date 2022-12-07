@@ -31,6 +31,7 @@ class BlogPost(models.Model):
     topic = models.ForeignKey(Topic, verbose_name=_("topic"), related_name='blogpost_topics', on_delete=models.CASCADE)
     image = models.ImageField(_("image"), null = True, blank = True, upload_to='images/', default = 'images/default.png')
     users_readlater = models.ManyToManyField(User, related_name="user_readlater", blank=True)
+    likes = models.IntegerField(_("likes"), default = 0)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -60,5 +61,14 @@ class BlogComment(models.Model):
     content = models.TextField(_("content"), max_length=2000)
 
 
+
     def __str__(self):
         return self.user.username
+
+
+class BlogLike(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "user_likes")
+    liked_blog = models.ForeignKey(BlogPost, on_delete = models.CASCADE, related_name = 'blogpost_likes')
+
+    def __str__(self):
+        return f"{self.user.username} likes {self.liked_blog.title}"

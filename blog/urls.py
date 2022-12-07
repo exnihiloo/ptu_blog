@@ -11,4 +11,5 @@ urlpatterns = [
     path('topic/<str:item>/', views.topicview, name='topic'),
     path('search/', views.search, name='search'),
     path('search/<int:pk>', views.BlogDetail.as_view(), name='blogpost'),
+    path('like/<int:pk>', views.likes, name='like'),
 ]
