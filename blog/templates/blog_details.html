@@ -63,8 +63,6 @@
                     <img src="{{ blogpost.image.url }}">
                 </div>
             {% endif %}
-
-
             <hr>
             <h2>Comments:</h2>
             {% if not blogpost.comments.all %}
@@ -74,20 +72,29 @@
                 {% comment %} <strong>@{{ comment.user.username }} - {{ comment.created_at }}</strong>
                     <br/>
                     <small>{{ comment.content }}</small> {% endcomment %}
-                    <div class="media">
-                        {% if comment.user.profile.photo %}
-                            <img class="align-self-center mr-3 profile" src="{{ comment.user.profile.photo.url }}" alt="Generic placeholder image">
-                        {% endif %} 
-                        <div class="media-body">
-                        <h3 class="mt-0">@{{ comment.user.username }}</h3>
-                        <small>{{ comment.created_at }}</small>
-                        <br/>
-                        <i> {{ comment.content }}</i>
+                    <div class="album py-5 bg-light">
+                        <div class="container">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+                                <div class="media">
+                                    {% if comment.user.profile.photo %}
+                                        <img class="align-self-center mr-3 profile" src="{{ comment.user.profile.photo.url }}" alt="Generic placeholder image">
+                                    {% endif %} 
+                                    <div class="media-body">
+                                    <h3 class="mt-0">@{{ comment.user.username }}</h3>
+                                    <small>{{ comment.created_at }}</small>
+                                    <br/>
+                                    <i> {{ comment.content }}</i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <br/><br/>
                 {% endfor %}
             {% endif %}
+        </div>
+    </div>
+</div>
 
 
             <hr>

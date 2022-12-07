@@ -60,7 +60,7 @@ class CommentForm(forms.ModelForm):
         model = models.BlogComment
         fields = ('content', 'blogpost', 'user', )
         widgets = {
-            'content' : forms.Textarea(attrs = {'class':'form-control', 'placeholder': 'Write your story here'}),
+            'content' : forms.Textarea(attrs = {'class':'form-control', 'placeholder': 'Comment the blog post'}),
             'blogpost': forms.TextInput(attrs = {'class':'form-control', 'value' : '', 'id':'blogpost', 'type':'hidden'}),
             'user': forms.TextInput(attrs = {'class':'form-control', 'value' : '', 'id':'user', 'type':'hidden'}),
         }

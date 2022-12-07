@@ -69,13 +69,17 @@
                     {% for blogpost in blogpost_list %}
                     <div class="col">
                         <div class="shadow-lg p-3 mb-5 bg-white rounded">
-                            <img class="img-fluid" src="{{ blogpost.image.url }}" alt="Responsive image">
+                                <div class="d-flex justify-content-center">
+                                    <img class="img-fluid" src="{{ blogpost.image.url }}" alt="Responsive image">
+                                </div>
                             <div class="card-body">
-                                <p class="card-text">
+                                <p class="card-text text-center">
                                     <a href="{% url 'blogview' blogpost.pk %}">{{ blogpost.title }}</a>
                                     by: <a href="{% url 'otherprofile' blogpost.author.profile.id %}"><small>@{{ blogpost.author }}</small></a>
                                 </p>
-                                <p class="card-text">{{ blogpost.body|slice:":50"|safe }}</p>
+                                <div class="card-text text-center">
+                                    <p class="card-text">{{ blogpost.body|slice:":50"|safe }}</p>
+                                </div>
                                 <div class="d-flex justify-content-between">
                                     <div class="btn-group">
                                         {% if user.is_authenticated %}
