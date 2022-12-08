@@ -19,23 +19,6 @@
         <div>Manage your read laters</div>
         <hr />
         {% for blogpost in readlater %}
-        {% comment %} <div class="card mb-5 rounded-3">
-            <div class="row g-0">
-                <div class="col-md-2">
-                    <img class="img-fluid d-block p-1" src="{{ blogpost.image.url }}"/>
-                </div>
-                <div class="col-md-10">
-                    <div class="card-body">
-                    <a class="card-title h5" href="{{ blogpost.get_absolute_url }}">{{blogpost.title}}</a>
-                    <small> by {{blogpost.author}}</small>
-                    <p class="card-text">{{ blogpost.body|safe }}</p>
-                    <div class='col-12 text-end'>
-                        <a type="button" class="btn btn-primary fw500 btn-sm" href="{% url 'user_readlater' blogpost.id %}">Remove from Wishlist</a>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div> {% endcomment %}
         <div class="card mb-3" style="max-width: 540px;">
             <div class="row no-gutters">
               <div class="col-md-4">
