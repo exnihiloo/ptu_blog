@@ -2,19 +2,42 @@
 {% load static %}
 {% block title %}Manage account{% endblock title %}
 {% block content %}
+
+
 <main class="pt-1 mt-5">
     <div class="container" style="max-width: 1000px">
         <div class="col-12">
-            <h1 class="h2">{{user.username}} profile</h1>
+            {% if messages %}
+                <div class="alert alert-success text-center" alert-"{{ message.tags }}" role="alert">
+                {% for message in messages  %}
+                    {{message|safe}}
+                {% endfor %}
+                </div>
+            {% endif %}
+            <h1 class="h2 text-center">{{user.username}} profile</h1>
         </div>
-        <div class="col-12 d-flex justify-content-between">
-            <small>My personal details</small>
-            {% if user.blog_posts %}
+        {% comment %} <div class="col-12 d-flex justify-content-between"> {% endcomment %}
+            <br/>
+            <hr/>
+            <div class="card mb-3" style="max-width: 940px;">
+                <div class="row no-gutters">
+                  <div class="col-md-4">
+                    <img src="{{ user.profile.photo.url }}" class="card-img" alt="...">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ user.username }}</h5>
+                      <p class="card-text">{{ user.profile.about }}</p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            {% comment %} {% if user.blog_posts %}
                 {% for bpost in user.blog_posts.all %}
                     {{ bpost.title }}
                 {% endfor %}
-            {% endif %}  
-        </div>
+            {% endif %}   {% endcomment %}
+        {% comment %} </div> {% endcomment %}
         <hr/>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col">

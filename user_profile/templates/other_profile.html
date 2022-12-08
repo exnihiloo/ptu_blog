@@ -2,20 +2,53 @@
 {% block title %}Other user profile{% endblock title %}
 {% block content %}
 
-<h1>View profile</h1>
-<div class="container">
-    {{ page_user }}
-    {{ page_user.user.first_name }}
-    <br/>
-    {{ page_user.user.profile.about }}
-    <br/>
-    <hr>
-    {% if page_user.user.blog_posts %}
-        {% for blogpost in page_user.user.blog_posts.all %}
-        {{ blogpost.title }}<br/><hr>
-        {% endfor %}
-    {% endif %}
+
+<style>
+    .blog-img img {
+        width: 220px;
+        height: 148px;
+    }
+</style>
+
+
+<h1>View profile {{ page_user.user.username }}</h1>
+<div class="card mb-3" style="max-width: 940px;">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="{{ page_user.user.profile.photo.url }}" class="card-img" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ page_user.user.username }}</h5>
+          <p class="card-text">{{ page_user.user.profile.about }}</p>
+        </div>
+      </div>
+    </div>
 </div>
-
-
+<hr>
+<div class="album py-5 bg-light">
+    <div class="container text-center">
+        <h1>Read {{ page_user.user.username }} blogs:</h1>
+        {% if page_user.user.blog_posts %}
+            {% for blogpost in page_user.user.blog_posts.all %}
+            <div class="card mb-3" style="max-width: 640px; max-height: 150px;">
+                <div class="row no-gutters">
+                <div class="col-md-4">
+                    <div class="blog-img">
+                        <img src="{{ blogpost.image.url }}" class="card-img" alt="...">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                    <a href="{% url 'blogview' blogpost.pk %}"><h5 class="card-title">{{ blogpost.title }}</h5></a>
+                    <p class="card-text">{{ blogpost.body|slice:":50"|safe }}...</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+            {% comment %} {{ blogpost.title }} {% endcomment %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
 {% endblock content %}
