@@ -16,10 +16,15 @@
                             <div class="form-group">
                                 <form method="POST">
                                     {% csrf_token %}
-                                    {% comment %} <p>
-                                        <label for="id_username">Username:</label>
-                                        <input type="text" name="username" maxlength="150" autofocus class="form-control mb-3" placeholder="Username" required id="id_username">
-                                    </p> {% endcomment %}
+                                    {% if form.errors %}
+                                        {% for field in form %}
+                                            {% for error in field.errors %}
+                                                <div class="alert alert-danger" role="alert">
+                                                    {{ error|escape }}
+                                                </div>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% endif %}
                                     <label class="sr-only" for="inlineFormInputGroupUsername">Username</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend mb-2">

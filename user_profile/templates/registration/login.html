@@ -15,7 +15,17 @@
                             <div class="form-group">
                                 <form method="POST">
                                     {% csrf_token %}
-                                    {{ form.as_p }}
+                                        {% for error in form.non_field_errors %}
+                                            <div class="alert alert-danger" role="alert">{{ error }}</div>
+                                        {% endfor %}
+                                    <p>
+                                        <label for="id_username">Username:</label>
+                                        <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username"> 
+                                    </p>
+                                    <p>
+                                        <label for="id_password">Password:</label>
+                                        <input type="password" name="password" autocomplete="current-password" required id="id_password">
+                                    </p>
                                     <button class="btn btn-success">Login</button>
                                 </form>
                                 <br/>
