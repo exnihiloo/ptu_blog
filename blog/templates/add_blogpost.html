@@ -3,36 +3,30 @@
 {% block content %}
 
 
-<div class="container-fluid">
-    <div class="row no-gutter">
-        <div class="col-md-12">
-            <div class="login d-flex align-items-center py-5">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-lg-6  mx-auto">
-                            {% if user.is_authenticated %}
-                                <h1>Add blog posts</h1>
-                                <br/><br/>
-                                <div class="form-group">
-                                    <form method="POST" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        {{ form.media }}
-                                        {{ form.as_p }}
-                                        <div class='text-center'>  
-                                            <button class="btn btn-success">Post</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            {% else %}
-                            The page is only for registered users.
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
+<style>
+    .django-ckeditor-widget div {
+        width: 1110px;
+    }
+</style>
+
+
+{% if user.is_authenticated %}
+    <h1>Add blog posts</h1>
+    <br/><br/>
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <div class='text-center'>  
+                <button class="btn btn-success btn-lg btn-block">Post</button>
             </div>
-        </div>
+        </form>
     </div>
-</div>
+{% else %}
+The page is only for registered users.
+{% endif %}
+
 
 <script>
     var name = "{{ user.id }}";

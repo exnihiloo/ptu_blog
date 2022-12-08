@@ -8,6 +8,7 @@ urlpatterns = [
     path('readlater/add_to_readlater/<int:id>', views.read_later, name = 'user_readlater'),
     path('readlater', views.readlaterview, name = 'readlater'),
     path('mydashboard/', views.mydashboard, name='mydashboard'),
+    path('myblogposts/', views.myblogposts, name='myblogposts'),
     path('delete_profile/', views.deleteprofile, name = 'delete_profile'),
     path('<int:pk>/profile', views.OtherProfile.as_view(), name = 'otherprofile')
 ]

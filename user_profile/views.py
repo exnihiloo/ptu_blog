@@ -98,6 +98,10 @@ def readlaterview(request):
 def mydashboard(request):
     return render(request, 'mydashboard.html')
 
+@login_required
+def myblogposts(request):
+    return render(request, 'myblogs.html')
+
 
 @login_required
 def deleteprofile(request):

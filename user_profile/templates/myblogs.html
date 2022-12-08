@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .blog-img img {
+        width: 320px;
+        height: 200px;
+    }
+</style>
+
+
+<h1 class='text-center'>{{ user.username }} blogs</h1>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <h1>My blogs:</h1>
+        {% if user.blog_posts %}
+            {% for blogpost in user.blog_posts.all %}
+            <div class="card mb-3" style="max-width: 1040px; max-height: 250px;">
+                <div class="row no-gutters">
+                <div class="col-md-4">
+                    <div class="blog-img">
+                        <img src="{{ blogpost.image.url }}" class="card-img" alt="...">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                    <a href="{% url 'blogview' blogpost.pk %}"><h5 class="card-title">{{ blogpost.title }}</h5></a>
+                    <p class="card-text">{{ blogpost.body|slice:":250"|safe }}...</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+            {% comment %} {{ blogpost.title }} {% endcomment %}
+            {% endfor %}
+        {% else %}
+        <p> No blogs written</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}
