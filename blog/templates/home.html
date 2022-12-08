@@ -75,7 +75,12 @@
                             <div class="card-body">
                                 <p class="card-text text-center">
                                     <a href="{% url 'blogview' blogpost.pk %}">{{ blogpost.title }}</a>
-                                    by: <a href="{% url 'otherprofile' blogpost.author.profile.id %}"><small>@{{ blogpost.author }}</small></a>
+                                    by:
+                                    {% if user.id == blogpost.author.id %}
+                                        <a href="{% url 'mydashboard' %}"><small>@{{ blogpost.author }}</small></a>
+                                    {% else %}
+                                        <a href="{% url 'otherprofile' blogpost.author.profile.id %}"><small>@{{ blogpost.author }}</small></a>
+                                    {% endif %}
                                 </p>
                                 <div class="card-text text-center">
                                     <p class="card-text">{{ blogpost.body|slice:":50"|safe }}</p>

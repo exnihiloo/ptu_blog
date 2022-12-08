@@ -8,18 +8,25 @@
         padding: 5px;
         width: 70px;
       }
+    .post-author img {
+        border-radius: 50%;
+        width: 25px;
+    }
 </style>
 
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
             <div class="col-md-12 text-center">
-                <h1> {{ blogpost.title }} - @{{ blogpost.author }}</h1>
+                <h1> {{ blogpost.title }} - <a href="{% url 'otherprofile' blogpost.author.profile.id %}"> @{{ blogpost.author }}</h1></a>
                 {% comment %} <div class="container">
                     <div class="row">
                     <div class="col"> {% endcomment %}
-                    {% if user.is_authenticated %}
-                    <div class="col-md-12 text-right">
+                    {% if user.is_authenticated %} 
+                        {% if user.id == blogpost.author.id %}
+                            <p></p>
+                        {% else %}
+                        <div class="col-md-12 text-right">
                         <a href="{% url 'user_readlater' blogpost.id %}" class="btn btn-outline-secondary border-0 basket-btn" role="button" aria-pressed="true">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-moon-stars" viewBox="0 0 16 16">
                                 <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z"/>
@@ -28,6 +35,7 @@
                             To wishlist
                         </div>
                         </a>
+                        {% endif %}
                     </div>
                     {% endif %}
                     {% comment %} </div>
@@ -46,13 +54,28 @@
             </div>
             <small><strong>Posted </strong>{{ blogpost.creation_date|timesince }}</small>
             <br/>
-            <small> By: 
-                @{{ blogpost.author }}
+            <small>
+                <div class="post-author">
+                    By: 
+                    {% if user.id == blogpost.author.id %}
+                        <a href="{% url 'mydashboard' %}">
+                            <img class="align-self-center mr-3" src="{{ blogpost.author.profile.photo.url }}" alt="Generic placeholder image">
+                            @{{ blogpost.author }}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'otherprofile' blogpost.author.profile.id %}">
+                            <img class="align-self-center mr-3" src="{{ blogpost.author.profile.photo.url }}" alt="Generic placeholder image">
+                            @{{ blogpost.author }}
+                        </a>
+                    {% endif %}
+                </div>
 
                 {% if user.is_authenticated %}
                     {% if user.id == blogpost.author.id %}
-                        <a href="{% url 'edit_blogpost' blogpost.pk %}"> Edit</a> 
-                        <a href="{% url 'delete_blogpost' blogpost.pk %}"> Delete</a></small>
+                        <div class="text-right">
+                            <a href="{% url 'edit_blogpost' blogpost.pk %}"> Edit</a> 
+                            <a href="{% url 'delete_blogpost' blogpost.pk %}"> Delete</a></small>
+                        </div>
                     {% endif %}
                 {% endif %}
             <hr>
@@ -69,9 +92,6 @@
                 <p>No comments yet</p>
             {% else %}
                 {% for comment in blogpost.comments.all %}
-                {% comment %} <strong>@{{ comment.user.username }} - {{ comment.created_at }}</strong>
-                    <br/>
-                    <small>{{ comment.content }}</small> {% endcomment %}
                     <div class="album py-5 bg-light">
                         <div class="container">
                             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
@@ -97,42 +117,39 @@
 </div>
 
 
-            <hr>
-            {% if user.is_authenticated %}
-                <div class="section">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-8 mx-auto">
-                                <form action="#" method="POST">
-                                    {% csrf_token %}
-                                    <div class='form-group'>
-                                        {{form.as_p}}
-                                    </div>
-                                    <button class="btn btn-primary" type="submit">Comment</button>
-                                </form>
-                            </div>
+<hr>
+{% if user.is_authenticated %}
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <form action="#" method="POST">
+                        {% csrf_token %}
+                        <div class='form-group'>
+                            {{form.as_p}}
                         </div>
-                    </div>
+                        <button class="btn btn-primary" type="submit">Comment</button>
+                    </form>
                 </div>
-            {% endif %}
-            <hr>
-            <div class="col-6">
-                <span>{{ blogpost.likes }} likes <span>
             </div>
-            {% if user.is_authenticated %}
-            <div class="col-6">
-                <a href="{% url 'like' blogpost.pk %}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search-heart" viewBox="0 0 16 16">
-                        <path d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"/>
-                        <path d="M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5ZM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z"/>
-                    </svg>
-                </a>
-            </div>
-            {% endif %}
-            <br/><br/>
-            <a href="{% url 'home' %}" class="btn btn-success">Back</a>
         </div>
     </div>
+{% endif %}
+<hr>
+<div class="col-6">
+    <span>{{ blogpost.likes }} likes <span>
 </div>
+{% if user.is_authenticated %}
+<div class="col-6">
+    <a href="{% url 'like' blogpost.pk %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search-heart" viewBox="0 0 16 16">
+            <path d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"/>
+            <path d="M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5ZM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z"/>
+        </svg>
+    </a>
+</div>
+{% endif %}
+<br/><br/>
+<a href="{% url 'home' %}" class="btn btn-success">Back</a>
 
 {% endblock content %}
