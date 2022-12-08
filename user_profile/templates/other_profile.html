@@ -5,8 +5,8 @@
 
 <style>
     .blog-img img {
-        width: 220px;
-        height: 148px;
+        width: 320px;
+        height: 200px;
     }
 </style>
 
@@ -27,11 +27,11 @@
 </div>
 <hr>
 <div class="album py-5 bg-light">
-    <div class="container text-center">
+    <div class="container">
         <h1>Read {{ page_user.user.username }} blogs:</h1>
         {% if page_user.user.blog_posts %}
             {% for blogpost in page_user.user.blog_posts.all %}
-            <div class="card mb-3" style="max-width: 640px; max-height: 150px;">
+            <div class="card mb-3" style="max-width: 1040px; max-height: 250px;">
                 <div class="row no-gutters">
                 <div class="col-md-4">
                     <div class="blog-img">
@@ -41,7 +41,7 @@
                 <div class="col-md-8">
                     <div class="card-body">
                     <a href="{% url 'blogview' blogpost.pk %}"><h5 class="card-title">{{ blogpost.title }}</h5></a>
-                    <p class="card-text">{{ blogpost.body|slice:":50"|safe }}...</p>
+                    <p class="card-text">{{ blogpost.body|slice:":250"|safe }}...</p>
                     </div>
                 </div>
                 </div>

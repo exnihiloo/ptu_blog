@@ -129,3 +129,4 @@ class OtherProfile(DetailView):
         page_user = get_object_or_404(Profile, id=self.kwargs['pk'])
         context['page_user'] = page_user
         return context
+    

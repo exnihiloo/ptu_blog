@@ -2,8 +2,8 @@
 {% block title %}Delete blogpost{% endblock title %}
 {% block content %}
 {% if user.is_authenticated %}
-    {% if user.is_authenticated %}
-        <h1>Delete blog posts</h1>
+    {% if user.id == blogpost.author.id %}
+        <h1 class="mt-3">Delete blog posts</h1>
         <br/><br/>
         <h3>Delete: {{ blogpost.title }}</h3>
         <br/>
@@ -15,10 +15,13 @@
             </form>
         </div>
     {% else %}
-        ONly blogs creator can delete his blog.
+        <div class="container">
+            <h1 class="mt-2">Only blogs creator can delete his blog.</h1>
+        </div>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/>
     {% endif %}
 {% else %}
 The page is only for registered users.
 {% endif %}
-
+<br/><br/><br/><br/><br/>
 {% endblock content %}

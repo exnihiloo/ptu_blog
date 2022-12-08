@@ -26,6 +26,14 @@
                 <div class="col-md-8">
                     <div class="card-body">
                     <a href="{% url 'blogview' blogpost.pk %}"><h5 class="card-title">{{ blogpost.title }}</h5></a>
+                    {% if user.is_authenticated %}
+                        {% if user.id == blogpost.author.id %}
+                            <div class="text-right">
+                                <a href="{% url 'edit_blogpost' blogpost.pk %}"> Edit</a> 
+                                <a href="{% url 'delete_blogpost' blogpost.pk %}"> Delete</a></small>
+                            </div>
+                        {% endif %}
+                    {% endif %}
                     <p class="card-text">{{ blogpost.body|slice:":250"|safe }}...</p>
                     </div>
                 </div>
