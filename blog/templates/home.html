@@ -90,7 +90,7 @@
                                         {% if user.is_authenticated %}
                                             {% if user.id == blogpost.author.id %}
                                                 <a href="{% url 'edit_blogpost' blogpost.pk %}">
-                                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1">Edit</button>
                                                 </a>
                                                 <a href="{% url 'delete_blogpost' blogpost.pk %}">
                                                     <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>

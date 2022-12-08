@@ -1,28 +1,51 @@
 {% extends 'base.html' %}
 {% block content %}
-
-
+{% block title %}{{topic.name}}{% endblock title %}
+<style>
+    .blog-img img {
+        width: 320px;
+        height: 198px;
+    }
+  
+</style>
 {% if topic_blogposts %}
-    <h1>{{ topic.name }}</h1>
-
-    <ul>
-        {% for blogpost in topic_blogposts %}
-            <li><a href="{% url 'blogview' blogpost.pk %}">{{ blogpost.title }}</a> 
-                - {{ blogpost.topic }}
-                : @{{ blogpost.author }}<br/>
-            <small><strong>Posted </strong>{{ blogpost.creation_date|timesince }}</small>
-            <br/>
-            {% if user.is_authenticated %}
-                {% if user.id == blogpost.author.id %}
-                    <small><a href="{% url 'edit_blogpost' blogpost.pk %}">Edit</a></small>
-                    <small><a href="{% url 'delete_blogpost' blogpost.pk %}">Delete</a></small>
-                {% endif %}
-            {% endif %}
-            {{ blogpost.body|slice:":255"|safe }}</li>
-        {% endfor %}
-    </ul>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            {% for blogpost in topic_blogposts %}
+                <div class="card mb-3" style="max-width: 1040px; max-height: 200px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                        <div class="blog-img">
+                            <img src="{{ blogpost.image.url }}" class="card-img" alt="...">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <a href="{% url 'blogview' blogpost.pk %}"><h5 class="card-title">{{ blogpost.title }}</a>
+                            <div class="post-author">
+                            By:
+                            <small>
+                            {% if user.id == blogpost.author.id %}
+                                <a href="{% url 'mydashboard' %}">
+                                    @{{ blogpost.author }}
+                                </a>
+                            {% else %}
+                                <a href="{% url 'otherprofile' blogpost.author.profile.id %}">
+                                    @{{ blogpost.author }}
+                                </a>
+                            {% endif %}
+                            </small>
+                            </div>
+                            <p class="card-text">{{ blogpost.body|slice:":150"|safe }}...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 {% else %}
-    <h3>No blogs written on this topic.</h3>
+    <h1>No blogs written on this topic</h1>
 {% endif %}
 
 {% endblock content %}

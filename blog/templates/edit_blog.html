@@ -2,6 +2,14 @@
 {% block title %}Edit blogpost{% endblock title %}
 {% block content %}
 
+
+<style>
+    .django-ckeditor-widget div {
+        width: 1110px;
+    }
+</style>
+
+
 {% if user.is_authenticated %}
     {% if user.id == blogpost.author.id %}
         <h1>Edit blog posts</h1>
