@@ -3,18 +3,55 @@
 {% block content %}
 
 
-<h1>Search according to {{query}} results: </h1>
+<style>
+  .blog-img img {
+      width: 320px;
+      height: 198px;
+  }
+
+</style>
+
+<h1 class="mt-2">Search according to {{query}} results: </h1>
   </br>
-  {% if blogposts %}
-  <ul>
-    {% for blogpost in blogposts %}
-      <li>
-        <a href="{{ blogpost.id }}">{{ blogpost }}</a>
-      </li>
-    {% endfor %}
-  </ul>
-  {% else %}
+
+{% if blogposts %}
+  <div class="album py-5 bg-light">
+    <div class="container">
+        {% for blogpost in blogposts %}
+            <div class="card mb-3" style="max-width: 1040px; max-height: 200px;">
+                <div class="row no-gutters">
+                <div class="col-md-4">
+                    <div class="blog-img">
+                        <img src="{{ blogpost.image.url }}" class="card-img" alt="...">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                    <a href="{% url 'blogview' blogpost.pk %}"><h5 class="card-title">{{ blogpost.title }}</a>
+                      <div class="post-author">
+                        By:
+                        <small>
+                        {% if user.id == blogpost.author.id %}
+                            <a href="{% url 'mydashboard' %}">
+                                @{{ blogpost.author }}
+                            </a>
+                        {% else %}
+                            <a href="{% url 'otherprofile' blogpost.author.profile.id %}">
+                                @{{ blogpost.author }}
+                            </a>
+                        {% endif %}
+                        </small>
+                    </div>
+                    <p class="card-text">{{ blogpost.body|slice:":150"|safe }}...</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+         {% endfor %}
+    </div>
+</div>
+{% else %}
     <p>We couldn't find anything</p>
-  {% endif %}
+{% endif %}
 
 {% endblock content %}
