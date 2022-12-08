@@ -7,6 +7,7 @@ from django.views.generic.edit import FormMixin
 from .forms import BlogPostForm, EditBlogPostForm, CommentForm
 from django.urls import reverse_lazy, reverse
 from django.db.models import Q
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 

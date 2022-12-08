@@ -110,13 +110,13 @@
     </div>
     <div class="paginator">
         {% if page_obj.has_previous %}
-            <a href = "?{% if request.GET.query %}query={{request.GET.query}}&{% endif %}page=1">&#8676;</a>
-            <a href = "?{% if request.GET.query %}query={{request.GET.query}}&{% endif %}page={{ page_obj.previous_page_number}}">&#8592;</a>
+            <a href = "?{% if request.GET.query %}query={{request.GET.query}}&{% endif %}page=1">&laquo;</a>
+            <a href = "?{% if request.GET.query %}query={{request.GET.query}}&{% endif %}page={{ page_obj.previous_page_number}}">&#8249;</a>
         {% endif %}
         {{ page_obj.number}} out of {{ page_obj.paginator.num_pages }}
         {% if page_obj.has_next %}
-            <a href = "?{% if request.GET.query %}query={{request.GET.query}}&{% endif %}page={{ page_obj.next_page_number }}">&#8594;</a>
-            <a href = "?{% if request.GET.query %}query={{request.GET.query}}&{% endif %}page={{ page_obj.paginator.num_pages }}">&#8677;</a>
+            <a href = "?{% if request.GET.query %}query={{request.GET.query}}&{% endif %}page={{ page_obj.next_page_number }}">&#8250;</a>
+            <a href = "?{% if request.GET.query %}query={{request.GET.query}}&{% endif %}page={{ page_obj.paginator.num_pages }}">&raquo;</a>
         {% endif %}
     </div>
 </main>

@@ -16,6 +16,7 @@ from . import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
+
 User = get_user_model()
 
 
@@ -92,7 +93,7 @@ def read_later(request, id):
 def readlaterview(request):
     readlater_blogs = BlogPost.objects.filter(users_readlater = request.user)
     return render(request, 'user_readlater.html', {'readlater' : readlater_blogs})
-
+ 
 
 @login_required
 def mydashboard(request):
