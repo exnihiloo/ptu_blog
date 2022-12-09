@@ -13,8 +13,8 @@
 <div class="album py-5 bg-light">
     <div class="container">
         <h1>My blogs:</h1>
-        {% if user.blog_posts %}
-            {% for blogpost in user.blog_posts.all %}
+        {% if blogposts %}
+            {% for blogpost in blogposts %}
             <div class="card mb-3" style="max-width: 1040px; max-height: 250px;">
                 <div class="row no-gutters">
                     <div class="col-md-4">
@@ -35,7 +35,23 @@
         {% else %}
         <p> No blogs written</p>
         {% endif %}
+        <hr>
+        <br/>
+        <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center"> 
+        {% if blogposts.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ blogposts.previous_page_number }}">Previous</a></li>
+        {% endif %} 
+        {% for i in nums %}
+            <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+        {% endfor %}
+        {% if blogposts.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ blogposts.next_page_number }}">Next</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ blogposts.paginator.num_pages }}">Last &raquo</a></li>
+        {% endif %}
+        </ul>
+        </nav>
     </div>
 </div>
-
 {% endblock content %}

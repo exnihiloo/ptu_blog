@@ -109,7 +109,11 @@ def mydashboard(request):
 
 @login_required
 def myblogposts(request):
-    return render(request, 'myblogs.html')
+    user_blogs = Paginator(BlogPost.objects.filter(author = request.user), 2)
+    page = request.GET.get('page')
+    blogposts = user_blogs.get_page(page)
+    nums = "a" * blogposts.paginator.num_pages
+    return render(request, 'myblogs.html', {'blogposts' : blogposts, 'nums' : nums})
 
 
 @login_required
