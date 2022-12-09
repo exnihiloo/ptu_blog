@@ -50,6 +50,23 @@
          {% endfor %}
     </div>
 </div>
+</hr>
+<br/>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center"> 
+    {% if blogposts.has_previous %}
+      <li class="page-item"><a class="page-link" href="?query={{query}}&page=1">&laquo First</a></li>
+      <li class="page-item"><a class="page-link" href="?query={{query}}&page={{ blogposts.previous_page_number }}">Previous</a></li>
+    {% endif %} 
+    {% for i in nums %}
+      <li class="page-item"><a class="page-link" href="?query={{query}}&page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+    {% endfor %}
+    {% if blogposts.has_next %}
+    <li class="page-item"><a class="page-link" href="?query={{query}}&page={{ blogposts.next_page_number }}">Next</a></li>
+    <li class="page-item"><a class="page-link" href="?query={{query}}&page={{ blogposts.paginator.num_pages }}">Last &raquo</a></li>
+    {% endif %}
+   </ul>
+  </nav>
 {% else %}
     <p>We couldn't find anything</p>
 {% endif %}

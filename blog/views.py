@@ -10,6 +10,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 class Home(ListView):
     model = BlogPost
@@ -126,7 +127,16 @@ def search(request):
         Q(author__username__icontains=query) | 
         Q(topic__name__icontains=query) 
     )
-    return render(request, 'search.html', {'blogposts': search_results, 'query': query})
+    page = request.GET.get('page')
+    paginator = Paginator(search_results, 2)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    nums = "a" * posts.paginator.num_pages
+    return render(request, 'search.html', {'blogposts': search_results, 'query': query, 'blogposts' : posts, 'nums' : nums})
 
 @login_required
 def likes(request, pk):
