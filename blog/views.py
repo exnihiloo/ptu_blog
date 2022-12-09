@@ -116,8 +116,11 @@ class CreateTopic(CreateView):
 
 def topicview(request, item):
     topic = get_object_or_404(Topic, name = item)
-    topic_blogposts = BlogPost.objects.filter(topic = topic)
-    return render(request, 'topics.html', {'topic' : topic, 'topic_blogposts' : topic_blogposts})
+    paginate = Paginator(BlogPost.objects.filter(topic = topic), 2)
+    page = request.GET.get('page')
+    topic_blogposts = paginate.get_page(page)
+    nums = "a" * topic_blogposts.paginator.num_pages
+    return render(request, 'topics.html', {'topic' : topic, 'topic_blogposts' : topic_blogposts, 'nums' : nums})
 
 
 

@@ -44,6 +44,23 @@
             {% endfor %}
         </div>
     </div>
+    <hr>
+    <br/>
+    <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center"> 
+    {% if topic_blogposts.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ topic_blogposts.previous_page_number }}">Previous</a></li>
+    {% endif %} 
+    {% for i in nums %}
+        <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+    {% endfor %}
+    {% if topic_blogposts.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ topic_blogposts.next_page_number }}">Next</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ topic_blogposts.paginator.num_pages }}">Last &raquo</a></li>
+    {% endif %}
+    </ul>
+    </nav>
 {% else %}
     <h1>No blogs written on this topic</h1>
 {% endif %}
