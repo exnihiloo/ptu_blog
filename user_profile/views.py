@@ -15,6 +15,7 @@ from blog.models import BlogPost
 from . import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from django.core.paginator import Paginator
 
 
 User = get_user_model()
@@ -89,10 +90,17 @@ def read_later(request, id):
 
 
 
+
 @login_required
 def readlaterview(request):
-    readlater_blogs = BlogPost.objects.filter(users_readlater = request.user)
-    return render(request, 'user_readlater.html', {'readlater' : readlater_blogs})
+    # readlater_blogs = BlogPost.objects.filter(users_readlater = request.user)
+    paginate = Paginator(BlogPost.objects.filter(users_readlater = request.user), 2)
+    page = request.GET.get('page')
+    readlaters = paginate.get_page(page)
+    nums = "a" * readlaters.paginator.num_pages
+    return render(request, 'user_readlater.html', {'readlaters' : readlaters, 'nums' : nums})
+
+
  
 
 @login_required
