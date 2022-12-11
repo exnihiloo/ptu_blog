@@ -1,5 +1,8 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+<html lang='{{ LANGUAGE_CODE }}'>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -20,7 +23,7 @@
 
 
         
-    <title>{% block title %}Fox Blog{% endblock title %}</title>
+    <title>{% block title %}{% trans "Fox Blog" %}{% endblock title %}</title>
     <link rel="icon" type="img/png" href="https://www.freepnglogos.com/uploads/fox-png/black-fox-png-transparent-image-transparent-png-17.png" >
   </head>
   
@@ -51,7 +54,7 @@
                         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                       </svg>
                     </div>
-                    Create Blog
+                    {% trans "Create Blog" %}
                   </a>
                 </li>
                 <li>
@@ -62,7 +65,7 @@
                         <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z"/>
                       </svg>
                     </div>
-                    Create Topic
+                    {% trans "Create Topic" %}
                   </a>
                 </li>
                 {% endif %}
@@ -74,7 +77,7 @@
                         <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                       </svg>
                     </div>
-                    Topics
+                    {% trans "Topics" %}
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% for item in item_menu %}
@@ -92,7 +95,7 @@
                             <path d="M12 1a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2a1 1 0 0 1 1-1h8zm-2 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
                         </svg>
                     </div>
-                    Logout
+                    {% trans "Logout" %}
                 </a>
                 <a type="button" role="button" href="{% url 'mydashboard' %}"
                       class="btn btn-outline-secondary border-0 text-end mr-2">
@@ -112,7 +115,7 @@
                             <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
                           </svg>
                         </div>
-                        Admin
+                        {% trans "Admin" %}
                       </a>
                     {% endif %}
               {% else %}
@@ -123,7 +126,7 @@
                     <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2ZM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96c.026-.163.04-.33.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1.006 1.006 0 0 1 1 12V4Z"/>
                   </svg>
                 </div>
-                Register
+                {% trans "Register" %}
               </a>
               <a type="button" role="button" href="{% url "login" %}" class="btn btn-outline-secondary border-0 basket-btn">
                 <div>
@@ -131,7 +134,7 @@
                         <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
                     </svg>
                 </div>
-                Login
+                {% trans "Login" %}
               </a>
               {% endif %}
               <form class="form-inline" action="{% url 'search' %}" method="get">
@@ -157,9 +160,20 @@
         <div class="row pt-2">
             <div class="col-10 col-md">
                 <img src='https://www.freepnglogos.com/uploads/fox-png/black-fox-png-transparent-image-transparent-png-17.png' width="30" height="30">
-                <small class="inline-block mb-3 text-muted">&copy; 2022 Code Academy course</small>
+                <small class="inline-block mb-3 text-muted">&copy; {% trans "2022 Code Academy course" %}</small>
             </div>
         </div>
+        <span class='text-right'>
+          <form action="{% url 'set_language' %}" method="POST">
+              {% csrf_token %}
+              <input name="next" type="hidden" value="{{ request.path }}">
+              <select name="language" onchange="this.form.submit()">
+                  {% for lang in LANGUAGES %}
+                  <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %}selected{% endif %}> {{ lang.1 }}</option>
+                  {% endfor %}
+              </select>
+          </form>
+      </span>
     </footer>
   </body>
 </html>

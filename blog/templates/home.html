@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block content %}
 
 <!-- karuselės pradžia-->
@@ -24,7 +25,7 @@
                 <img class="first-slide" src="https://d18lkz4dllo6v2.cloudfront.net/cumulus_uploads/entry/43959/adobe-aliens.jpeg?pw=1200" width="1200" height="350" alt="First slide">
                 <div class="container">
                 <div class="carousel-caption text-left">
-                    <h1>Do aliens exist?</h1>
+                    <h1>{% trans "Do aliens exist?" %}</h1>
                 </div>
                 </div>
             </div>
@@ -32,7 +33,7 @@
                 <img class="second-slide" src="https://miro.medium.com/max/1400/1*GvnuAR0VEjyFU2jRuCjIJw.png" width="1200" height="350" alt="Second slide">
                 <div class="container">
                 <div class="carousel-caption text-left">
-                    <h2> Everything is Connected </h2>
+                    <h2> {% trans "Everything is Connected" %} </h2>
                 </div>
                 </div>
             </div>
@@ -41,18 +42,18 @@
                     width="1200" height="350" alt="Third slide">
                 <div class="container">
                 <div class="carousel-caption text-right">
-                    <p>my favourite conspiracy theory is that everything will eventually turn out okay</p>
+                    <p>{% trans "my favourite conspiracy theory is that everything will eventually turn out okay" %}</p>
                 </div>
                 </div>
             </div>
             </div>
             <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
+            <span class="sr-only">{% trans "Previous" %}</span>
             </a>
             <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
+            <span class="sr-only">{% trans "Next" %}</span>
             </a>
         </div>
     </section>
@@ -64,7 +65,7 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
-            <div class="pb-3 h5">Enjoy reading, writing, posting, creating</div>
+            <div class="pb-3 h5">{% trans "Enjoy reading, writing, posting, creating" %}</div>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
                     {% for blogpost in blogpost_list %}
                     <div class="col">
@@ -76,7 +77,7 @@
                             <div class="card-body">
                                 <p class="card-text text-center">
                                     <a href="{% url 'blogview' blogpost.pk %}">{{ blogpost.title }}</a>
-                                    by:
+                                    {% trans "by:" %}
                                     {% if user.id == blogpost.author.id %}
                                         <a href="{% url 'mydashboard' %}"><small>@{{ blogpost.author }}</small></a>
                                     {% else %}
@@ -91,10 +92,10 @@
                                         {% if user.is_authenticated %}
                                             {% if user.id == blogpost.author.id %}
                                                 <a href="{% url 'edit_blogpost' blogpost.pk %}">
-                                                    <button type="button" class="btn btn-sm btn-outline-secondary mr-5">Edit</button>
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary mr-5">{% trans "Edit" %}</button>
                                                 </a>
                                                 <a href="{% url 'delete_blogpost' blogpost.pk %}">
-                                                    <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary">{% trans "Delete" %}</button>
                                                 </a>
                                             {% endif %}
                                         {% endif %}
@@ -114,13 +115,13 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li> 
+            <li class="page-item"><a class="page-link" href="?page=1">&laquo {% trans "First" %}</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% trans "Previous" %}</a></li> 
         {% endif %}
-            <li class="page-item disabled"><span class="page-link">{{ page_obj.number}} out of {{ page_obj.paginator.num_pages }}</span></li>
+            <li class="page-item disabled"><span class="page-link">{{ page_obj.number}} {% trans "out of" %} {{ page_obj.paginator.num_pages }}</span></li>
         {% if page_obj.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{% trans "Next" %}</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{% trans "Last" %} &raquo</a></li>
         {% endif %}
        </ul>
     </nav>
