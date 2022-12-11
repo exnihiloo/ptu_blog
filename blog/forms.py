@@ -1,7 +1,6 @@
 from django import forms
 from . import models
 from django.utils.timezone import datetime, timedelta
-from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
 
@@ -32,16 +31,6 @@ class EditBlogPostForm(forms.ModelForm):
             'body' : forms.Textarea(attrs={'class':'form-control', 'placeholder': 'Write your story here'}),
             'topic' : forms.Select(attrs={'class':'form-control'}),
         }
-
-# comments
-# class CommentForm(forms.ModelForm):
-#     content = forms.CharField(widget = forms.Textarea(attrs = {
-#         'class': 'md-textarea form-control',
-#         'rows':'4'
-#     }))
-#     class Meta:
-#         models = models.BlogComment
-#         fields = ('content', )
         
 
 class CommentForm(forms.ModelForm):

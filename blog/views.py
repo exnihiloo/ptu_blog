@@ -1,16 +1,17 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import BlogPost, Topic, BlogLike
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views.generic.edit import FormMixin
+from .models import BlogPost, Topic, BlogLike
+from django.shortcuts import render, get_object_or_404
 from .forms import BlogPostForm, EditBlogPostForm, CommentForm
 from django.urls import reverse_lazy, reverse
-from django.db.models import Q
-from django.core.paginator import Paginator
-from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
 
 class Home(ListView):
     model = BlogPost
@@ -38,6 +39,7 @@ class BlogDetail(FormMixin, DetailView):
         self.object = self.get_object()
         form = self.get_form()
         if form.is_valid():
+            messages.error(self.request, _("Your comment was posted."), extra_tags='comment')
             return self.form_valid(form)
         else:
             messages.error(self.request, _("Malaka, you're posting too much!"), extra_tags='comment')
@@ -49,6 +51,7 @@ class BlogDetail(FormMixin, DetailView):
         form.instance.user = self.request.user
         form.save()
         return super().form_valid(form)
+
 
     def get_initial(self):
         return {
@@ -66,7 +69,7 @@ class BlogDetail(FormMixin, DetailView):
 
 
 
-class CreateBlog(CreateView):
+class CreateBlog(LoginRequiredMixin, CreateView):
     model = BlogPost
     form_class = BlogPostForm
     template_name = 'add_blogpost.html'
@@ -78,7 +81,7 @@ class CreateBlog(CreateView):
         return context
 
 
-class EditBlog(UpdateView):
+class EditBlog(LoginRequiredMixin, UpdateView):
     model = BlogPost
     form_class = EditBlogPostForm
     template_name = 'edit_blog.html'
@@ -90,7 +93,7 @@ class EditBlog(UpdateView):
         return context
 
 
-class DeleteBlog(DeleteView):
+class DeleteBlog(LoginRequiredMixin, DeleteView):
     model = BlogPost
     template_name = 'delete_blog.html'
     success_url = reverse_lazy('home')
@@ -100,9 +103,10 @@ class DeleteBlog(DeleteView):
         context = super(DeleteBlog, self).get_context_data(*args, **kwargs)
         context['item_menu'] = item_menu
         return context
+
     
 
-class CreateTopic(CreateView):
+class CreateTopic(LoginRequiredMixin, CreateView):
     model = Topic
     template_name = 'add_topic.html'
     fields = '__all__'
